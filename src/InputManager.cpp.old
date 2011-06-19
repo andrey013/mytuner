@@ -1,0 +1,74 @@
+#include "precompiled.h"
+#include <algorithm>
+#include "InputManager.h"
+
+bool InputManager::frameRenderingQueued(const Ogre::FrameEvent& frmevt)
+{
+    SDL_Event evt;
+    bool result = true;// continue == true; exit == false;
+    while (SDL_PollEvent(&evt))
+    {
+        switch (evt.type)
+        {
+            case SDL_KEYUP: case SDL_KEYDOWN:
+            {
+                KeyboardListenersList::const_iterator kb_it = kb_listeners.begin(), kb_end = kb_listeners.end();
+                for (; kb_it != kb_end; ++kb_it) result &= (*kb_it)->onKeyboardEvent(evt.key);
+                break;
+            }
+            case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP: case SDL_MOUSEMOTION:
+            {
+                MouseListenersList::const_iterator m_it = mouse_listeners.begin(), m_end = mouse_listeners.end();
+                for (; m_it != m_end; ++m_it)
+                {
+                if (evt.type == SDL_MOUSEBUTTONDOWN || evt.type == SDL_MOUSEBUTTONUP)
+                    result &= (*m_it)->onMouseBtn(evt.button);
+                if (evt.type == SDL_MOUSEMOTION) result &= (*m_it)->onMouseMotion(evt.motion);
+                }
+                break;
+            }
+            default:
+            {
+                OtherEventsListenersList::const_iterator other_it = other_listeners.begin(), other_end = other_listeners.end();
+                for (; other_it != other_end; ++other_it) result &= (*other_it)->onEvent(evt);
+            }
+        }
+    }
+    return result;
+}
+
+void InputManager::regKeyboardListener(KeyboardListener *l)
+{
+    if (l && std::find(kb_listeners.begin(), kb_listeners.end(), l) == kb_listeners.end())
+        kb_listeners.push_back(l);
+}
+
+void InputManager::unregKeyboardListener(KeyboardListener *l)
+{
+    if (l)
+        kb_listeners.remove(l);
+}
+
+void InputManager::regMouseListener(MouseListener *l)
+{
+    if (l && std::find(mouse_listeners.begin(), mouse_listeners.end(), l) == mouse_listeners.end())
+        mouse_listeners.push_back(l);
+}
+
+void InputManager::unregMouseListener(MouseListener *l)
+{
+    if (l)
+        mouse_listeners.remove(l);
+}
+
+void InputManager::regEventListener(EventListener *l)
+{
+    if (l && std::find(other_listeners.begin(), other_listeners.end(), l) == other_listeners.end())
+        other_listeners.push_back(l);
+}
+
+void InputManager::unregEventListener(EventListener *l)
+{
+    if (l)
+        other_listeners.remove(l);
+}

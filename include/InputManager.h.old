@@ -1,0 +1,52 @@
+#ifndef __InputManager_H__
+#define __InputManager_H__
+
+//#include "precompiled.h"
+#include <list>
+//#include <SDL.h>
+//#include <Ogre.h>
+
+class KeyboardListener
+{
+public:
+    virtual ~KeyboardListener() {}
+    virtual bool onKeyboardEvent(const SDL_KeyboardEvent &evt) = 0;
+};
+
+class MouseListener
+{
+public:
+    virtual ~MouseListener() {}
+    virtual bool onMouseMotion(const SDL_MouseMotionEvent &evt) = 0;
+    virtual bool onMouseBtn(const SDL_MouseButtonEvent &evt) = 0;
+};
+
+class EventListener
+{
+public:
+    virtual ~EventListener() {}
+    virtual bool onEvent(const SDL_Event &evt) = 0;
+};
+
+class InputManager: public Ogre::FrameListener
+{
+private:
+    typedef std::list<KeyboardListener*> KeyboardListenersList;
+    typedef std::list<MouseListener*> MouseListenersList;
+    typedef std::list<EventListener*> OtherEventsListenersList;
+private:
+    KeyboardListenersList kb_listeners;
+    MouseListenersList mouse_listeners;
+    OtherEventsListenersList other_listeners;
+public:
+    bool frameRenderingQueued(const Ogre::FrameEvent& frmevt);
+
+    void regKeyboardListener(KeyboardListener *l);
+    void unregKeyboardListener(KeyboardListener *l);
+    void regMouseListener(MouseListener *l);
+    void unregMouseListener(MouseListener *l);
+    void regEventListener(EventListener *l);
+    void unregEventListener(EventListener *l);
+};
+
+#endif

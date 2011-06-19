@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="Window" position="151 118 460 220" align="Center" layer="Middle">
+        <Property key="Widget_Caption" value="Tuner settings"/>
+        <Widget type="Tab" skin="Tab" position="0 0 450 180">
+            <Widget type="TabItem" skin="">
+                <Property key="Widget_Caption" value="Audio settings"/>
+                <Property key="Sheet_Select" value="true"/>
+                <Widget name="deviceList" type="ComboBox" skin="ComboBox" position="160 0 280 24"/>
+                <Widget type="StaticText" skin="StaticText" position="0 0 160 24">
+                    <Property key="Text_TextAlign" value="Left VCenter"/>
+                    <Property key="Widget_Caption" value="Device"/>
+                </Widget>
+                <Widget name="bufferSize" type="ComboBox" skin="ComboBox" position="160 30 280 24"/>
+                <Widget type="StaticText" skin="StaticText" position="0 30 160 24">
+                    <Property key="Text_TextAlign" value="Left VCenter"/>
+                    <Property key="Widget_Caption" value="Input buffer size"/>
+                </Widget>
+                <Widget name="nofBuffers" type="ComboBox" skin="ComboBox" position="160 60 280 24"/>
+                <Widget type="StaticText" skin="StaticText" position="0 60 160 24">
+                    <Property key="Text_TextAlign" value="Left VCenter"/>
+                    <Property key="Widget_Caption" value="Number of buffers"/>
+                </Widget>
+                <Widget name="samplingRate" type="ComboBox" skin="ComboBox" position="160 90 280 24"/>
+                <Widget type="StaticText" skin="StaticText" position="0 90 160 24">
+                    <Property key="Text_TextAlign" value="Left VCenter"/>
+                    <Property key="Widget_Caption" value="Sampling rate"/>
+                </Widget>
+                <Widget name="applyButton" type="Button" skin="Button" position="280 120 160 24">
+                    <Property key="Text_TextAlign" value="Center"/>
+                    <Property key="Widget_Caption" value="Apply"/>
+                </Widget>
+            </Widget>
+            <Widget type="TabItem" skin="">
+                <Property key="Widget_Caption" value="Calibration settings"/>
+                <Widget name="scale1" type="HScroll" skin="HScroll" position="160 0 280 18"/>
+                <Widget type="StaticText" skin="StaticText" position="0 0 160 24">
+                    <Property key="Text_TextAlign" value="Left VCenter"/>
+                    <Property key="Widget_Caption" value="Lowest note"/>
+                </Widget>
+                <Widget name="sensitivity" type="HScroll" skin="HScroll" position="160 30 280 18"/>
+                <Widget type="StaticText" skin="StaticText" position="0 30 160 24">
+                    <Property key="Text_TextAlign" value="Left VCenter"/>
+                    <Property key="Widget_Caption" value="Sensitivity"/>
+                </Widget>
+            </Widget>
+        </Widget>
+    </Widget>
+</MyGUI>
